@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import RegistrationForm from "../components/RegistrationForm";
 import { AntDesign } from "@expo/vector-icons";
+import RegistrationFormFormik from "../components/RegistrationFormFormik";
 
 export default function RegistrationScreen({ navigation }) {
   const handleUpdatePhoto = () => {
@@ -36,7 +37,8 @@ export default function RegistrationScreen({ navigation }) {
                 </TouchableOpacity>
               </View>
               <Text style={styles.title}>Реєстрація</Text>
-              <RegistrationForm navigation={navigation} />
+              {/* <RegistrationForm navigation={navigation} /> */}
+              <RegistrationFormFormik navigation={navigation} />
             </View>
           </ImageBackground>
         </View>

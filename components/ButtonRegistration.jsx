@@ -1,9 +1,13 @@
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 
-export default ButtonRegistration = ({ onPress, nameScreen }) => {
+export default ButtonRegistration = ({ onPress, nameScreen, isFormValid }) => {
   const title = nameScreen === "login" ? "Увійти" : "Зареєструватися";
   return (
-    <TouchableOpacity style={styles.button} onPress={onPress}>
+    <TouchableOpacity
+      style={[styles.button, !isFormValid && styles.disabledButton]}
+      onPress={onPress}
+      disabled={!isFormValid}
+    >
       <Text style={styles.buttonText}>{title}</Text>
     </TouchableOpacity>
   );
@@ -18,6 +22,7 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     alignItems: "center",
   },
+  disabledButton: { backgroundColor: "grey" },
   buttonText: {
     fontSize: 16,
     color: "white",

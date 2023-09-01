@@ -4,6 +4,7 @@ import LoginScreen from "./Screens/LoginScreen";
 import { useFonts } from "expo-font";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import HomeScreen from "./Screens/HomeScreen";
 
 const MainStack = createStackNavigator();
 
@@ -28,6 +29,11 @@ export default function App() {
         <MainStack.Screen
           name="Login"
           component={LoginScreen}
+          options={{ headerShown: false }}
+        />
+        <MainStack.Screen
+          name="Home"
+          component={HomeScreen}
           options={{ headerShown: false }}
         />
       </MainStack.Navigator>

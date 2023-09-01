@@ -8,6 +8,7 @@ import {
   View,
 } from "react-native";
 import LoginForm from "../components/LoginForm";
+import LoginFormFormik from "../components/LoginFormFormik";
 
 export default LoginScreen = ({ navigation }) => {
   return (
@@ -25,7 +26,8 @@ export default LoginScreen = ({ navigation }) => {
           >
             <View style={styles.loginContainer}>
               <Text style={styles.title}>Увійти</Text>
-              <LoginForm navigation={navigation} />
+              {/* <LoginForm navigation={navigation} /> */}
+              <LoginFormFormik navigation={navigation} />
             </View>
           </ImageBackground>
         </View>
@@ -37,8 +39,8 @@ export default LoginScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "flex-end",
+    // alignItems: "center",
+    // justifyContent: "flex-end",
   },
   loginContainer: {
     flex: 1,

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import {
+  Alert,
   KeyboardAvoidingView,
   Platform,
   StyleSheet,
@@ -30,11 +31,12 @@ export default LoginForm = ({ navigation }) => {
   };
 
   const handleSubmit = () => {
-    console.log("submit successfull");
-  };
-
-  const handlePressLogin = () => {
-    console.log("navigate to register");
+    const dataSubmit = {
+      email,
+      password,
+    };
+    console.log(dataSubmit);
+    Alert.alert(`email: ${dataSubmit.email}, password: ${dataSubmit.password}`);
   };
 
   return (
