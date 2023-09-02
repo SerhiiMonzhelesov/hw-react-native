@@ -2,27 +2,21 @@ import {
   ImageBackground,
   Keyboard,
   KeyboardAvoidingView,
-  StatusBar,
   StyleSheet,
   Text,
-  TouchableOpacity,
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-import RegistrationForm from "../components/RegistrationForm";
-import { AntDesign } from "@expo/vector-icons";
 import RegistrationFormFormik from "../components/RegistrationFormFormik";
+import PhotoUser from "../components/PhotoUser";
 
 export default function RegistrationScreen({ navigation }) {
-  const handleUpdatePhoto = () => {
-    return console.log("change Photo");
-  };
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <KeyboardAvoidingView
         behavior={Platform.OS == "ios" ? "padding" : "height"}
         style={{ flex: 1 }}
-        keyboardVerticalOffset={-144}
+        keyboardVerticalOffset={-170}
       >
         <View style={styles.container}>
           <ImageBackground
@@ -31,18 +25,13 @@ export default function RegistrationScreen({ navigation }) {
             style={styles.image}
           >
             <View style={styles.registerContainer}>
-              <View style={styles.wrapperPhoto}>
-                <TouchableOpacity onPress={handleUpdatePhoto}>
-                  <AntDesign name="pluscircleo" size={24} style={styles.icon} />
-                </TouchableOpacity>
-              </View>
+              <PhotoUser />
               <Text style={styles.title}>Реєстрація</Text>
               {/* <RegistrationForm navigation={navigation} /> */}
               <RegistrationFormFormik navigation={navigation} />
             </View>
           </ImageBackground>
         </View>
-        <StatusBar style="auto" />
       </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
   );
@@ -71,15 +60,6 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
   },
-  wrapperPhoto: {
-    width: 120,
-    height: 120,
-    backgroundColor: "#F6F6F6",
-    position: "absolute",
-    top: -60,
-    left: 136,
-    borderRadius: 12,
-  },
   title: {
     color: "#212121",
     textAlign: "center",
@@ -87,13 +67,5 @@ const styles = StyleSheet.create({
     fontStyle: "normal",
     fontSize: 30,
     marginBottom: 33,
-  },
-  icon: {
-    position: "absolute",
-    bottom: -104,
-    right: -12,
-    color: "#FF6C00",
-    backgroundColor: "white",
-    borderRadius: 50,
   },
 });

@@ -3,10 +3,7 @@ import { StyleSheet } from "react-native";
 import PostsScreen from "./PostsScreen";
 import CreatePostsScreen from "./CreatePostsScreen";
 
-import {
-  getFocusedRouteNameFromRoute,
-  useNavigation,
-} from "@react-navigation/native";
+import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import ProfileScreen from "./ProfileScreen";
 import IconNavBottom from "../components/IconNavBottom";
 import IconHeader from "../components/IconHeader";
@@ -14,7 +11,6 @@ import IconHeader from "../components/IconHeader";
 const Tabs = createBottomTabNavigator();
 
 export default function HomeScreen({ route }) {
-  const navigation = useNavigation();
   const routeName = getFocusedRouteNameFromRoute(route) ?? "Публікації";
 
   return (
@@ -40,9 +36,7 @@ export default function HomeScreen({ route }) {
         name="Публікації"
         component={PostsScreen}
         options={{
-          headerRight: () => (
-            <IconHeader name={"logout"} navigation={navigation} />
-          ),
+          headerRight: () => <IconHeader routeName={routeName} />,
           tabBarIcon: () => <IconNavBottom />,
         }}
       />
@@ -50,9 +44,7 @@ export default function HomeScreen({ route }) {
         name="Створити публікацію"
         component={CreatePostsScreen}
         options={{
-          headerLeft: () => (
-            <IconHeader name={"go-back"} navigation={navigation} />
-          ),
+          headerLeft: () => <IconHeader routeName={routeName} />,
           tabBarIcon: () => (
             <IconNavBottom routeName={routeName} name={"Створити публікацію"} />
           ),
@@ -70,6 +62,7 @@ export default function HomeScreen({ route }) {
               focused={focused}
             />
           ),
+          headerShown: false,
         }}
       />
     </Tabs.Navigator>

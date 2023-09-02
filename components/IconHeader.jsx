@@ -1,19 +1,28 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Feather } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
-export default function IconHeader({ name, navigation }) {
+export default function IconHeader({ routeName, name }) {
+  const navigation = useNavigation();
+
   let nameIcon, pathForNavigation, iconStyle;
 
-  if (name === "logout") {
+  if (routeName === "Публікації") {
     nameIcon = "log-out";
     pathForNavigation = () => navigation.navigate("Registration");
     iconStyle = { marginRight: 16 };
-  } else if (name === "go-back") {
+  } else if (
+    routeName === "Створити публікацію" ||
+    routeName === "Коментарі" ||
+    routeName === "Мапа"
+  ) {
     nameIcon = "arrow-left";
     pathForNavigation = () => navigation.navigate("Публікації");
     iconStyle = { marginLeft: 16 };
+  } else if (name === "Профіль") {
+    nameIcon = "log-out";
+    pathForNavigation = () => navigation.navigate("Registration");
   }
-
   return (
     <TouchableOpacity
       style={[styles.icon, iconStyle]}
