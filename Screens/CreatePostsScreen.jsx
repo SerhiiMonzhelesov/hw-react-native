@@ -52,7 +52,6 @@ export default function CreatePostsScreen({ navigation }) {
     setAddress(null);
     setPathImage(null);
     setNamePhoto("");
-    console.log("delete post");
   };
   const handleNamePhotoChange = (text) => {
     setNamePhoto(text);
@@ -74,13 +73,11 @@ export default function CreatePostsScreen({ navigation }) {
       const country = firstAddress.country;
       address = `${city}, ${country}`;
     }
-    // console.log(location);
     setCoords(coords);
     setAddress(address);
     // Фотозйомка та збереження фото
     if (cameraRef) {
       const { uri } = await cameraRef.takePictureAsync();
-      console.log(uri);
       await MediaLibrary.createAssetAsync(uri);
       setPathImage(uri);
     }

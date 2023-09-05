@@ -44,18 +44,17 @@ export default CreatePostForm = ({
         keyboardType="default"
       />
 
-      <TouchableOpacity onPress={() => console.log("locate")}>
-        <View style={styles.fieldLocation}>
-          <View style={{ width: 24, height: 24, position: "absolute" }}>
-            <Feather name="map-pin" size={24} color="#BDBDBD" />
-          </View>
-          {address ? (
-            <Text style={styles.fieldLocationText}>{address}</Text>
-          ) : (
-            <Text style={styles.fieldLocationText}>Місцевість...</Text>
-          )}
+      <View style={styles.fieldLocation}>
+        <View style={{ width: 24, height: 24, position: "absolute" }}>
+          <Feather name="map-pin" size={24} color="#BDBDBD" />
         </View>
-      </TouchableOpacity>
+        {address ? (
+          <Text style={styles.fieldLocationText}>{address}</Text>
+        ) : (
+          <Text style={styles.fieldLocationText}>Місцевість...</Text>
+        )}
+      </View>
+
       <ButtonRegistration
         onPress={handleSubmit}
         nameScreen="Створити публікацію"
