@@ -1,7 +1,12 @@
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 
 export default ButtonRegistration = ({ onPress, nameScreen, isFormValid }) => {
-  const title = nameScreen === "login" ? "Увійти" : "Зареєструватися";
+  const title =
+    nameScreen === "login"
+      ? "Увійти"
+      : nameScreen === "registration"
+      ? "Зареєструватися"
+      : "Опублікувати";
   return (
     <TouchableOpacity
       style={[styles.button, !isFormValid && styles.disabledButton]}

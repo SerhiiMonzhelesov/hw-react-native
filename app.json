@@ -18,6 +18,13 @@
       "supportsTablet": true
     },
     "android": {
+      // "package": "com.hw_react_native",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyDAW3UWJv3TyzofX4xF5oy3Ebt9bocvBis"
+        }
+      },
+
       "softwareKeyboardLayoutMode": "pan",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
