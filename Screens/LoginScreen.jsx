@@ -7,7 +7,6 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-import LoginForm from "../components/LoginForm";
 import LoginFormFormik from "../components/LoginFormFormik";
 
 export default LoginScreen = ({ navigation }) => {
@@ -26,7 +25,7 @@ export default LoginScreen = ({ navigation }) => {
           >
             <View style={styles.loginContainer}>
               <Text style={styles.title}>Увійти</Text>
-              {/* <LoginForm navigation={navigation} /> */}
+
               <LoginFormFormik navigation={navigation} />
             </View>
           </ImageBackground>

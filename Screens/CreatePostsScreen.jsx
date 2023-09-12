@@ -17,6 +17,7 @@ import * as MediaLibrary from "expo-media-library";
 import * as Location from "expo-location";
 import { useEffect, useState } from "react";
 import CreatePostForm from "../components/CreatePostForm";
+import { auth } from "../config";
 
 export default function CreatePostsScreen({ navigation }) {
   const [hasPermission, setHasPermission] = useState(null);
@@ -25,6 +26,7 @@ export default function CreatePostsScreen({ navigation }) {
 
   const [coords, setCoords] = useState(null);
   const [address, setAddress] = useState(null);
+  const [country, setCountry] = useState(null);
   const [pathImage, setPathImage] = useState(null);
   const [namePhoto, setNamePhoto] = useState("");
 
@@ -53,9 +55,11 @@ export default function CreatePostsScreen({ navigation }) {
     setPathImage(null);
     setNamePhoto("");
   };
+
   const handleNamePhotoChange = (text) => {
     setNamePhoto(text);
   };
+
   const takePictureAndCoords = async () => {
     let location = await Location.getCurrentPositionAsync({});
     const coords = {
@@ -71,14 +75,18 @@ export default function CreatePostsScreen({ navigation }) {
       const firstAddress = addressArray[0];
       const city = firstAddress.city || firstAddress.subregion;
       const country = firstAddress.country;
+
       address = `${city}, ${country}`;
+      setCountry(country);
     }
     setCoords(coords);
     setAddress(address);
+
     // Фотозйомка та збереження фото
     if (cameraRef) {
       const { uri } = await cameraRef.takePictureAsync();
       await MediaLibrary.createAssetAsync(uri);
+
       setPathImage(uri);
     }
   };
@@ -90,7 +98,7 @@ export default function CreatePostsScreen({ navigation }) {
           {pathImage ? (
             <Image
               source={{
-                uri: `${pathImage}`,
+                uri: pathImage,
               }}
               style={styles.image}
             />
@@ -134,6 +142,7 @@ export default function CreatePostsScreen({ navigation }) {
           namePhoto={namePhoto}
           navigation={navigation}
           coords={coords}
+          country={country}
         />
         <TouchableOpacity
           style={styles.trashWrapper}

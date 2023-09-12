@@ -2,26 +2,25 @@ import { Dimensions, StyleSheet, Text, View } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 
 export default function MapScreen({ route }) {
-  console.log(route.params);
   return (
     <View style={styles.container}>
       <MapView
         style={styles.mapStyle}
         region={{
-          latitude: route.params.latitude,
-          longitude: route.params.longitude,
+          latitude: route.params.coords.latitude,
+          longitude: route.params.coords.longitude,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
         mapType="standard"
         minZoomLevel={15}
-        onMapReady={() => console.log("Map is ready")}
-        onRegionChange={() => console.log("Region change")}
+        // onMapReady={() => console.log("Map is ready")}
+        // onRegionChange={() => console.log("Region change")}
       >
         <Marker
-          title="I am here"
-          coordinate={route.params}
-          description="Hello"
+          title={route.params.namePhoto}
+          coordinate={route.params.coords}
+          // description="Hello"
         />
       </MapView>
     </View>

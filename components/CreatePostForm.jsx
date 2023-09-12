@@ -1,13 +1,12 @@
-import { useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { StyleSheet, Text, TextInput, View } from "react-native";
 import ButtonRegistration from "./ButtonRegistration";
 import { Feather } from "@expo/vector-icons";
+import { db } from "../config";
+import { addDoc, collection } from "firebase/firestore";
+import { useDispatch, useSelector } from "react-redux";
+import { selectUserId, selectUserName } from "../redux/selectors";
+import { saveImageToStorage } from "../helpers/helpers";
+import { getDataStorageThunk } from "../redux/Thunks/postsThunk";
 
 export default CreatePostForm = ({
   namePhoto,
@@ -17,22 +16,54 @@ export default CreatePostForm = ({
   handleNamePhotoChange,
   navigation,
   coords,
+  country,
 }) => {
+  const userName = useSelector(selectUserName);
+  const userId = useSelector(selectUserId);
+  const isFormValid = namePhoto && address && pathImage;
+  const dispatch = useDispatch();
+  // const uploadImg = async () => {
+  //   try {
+  //     const response = await fetch(pathImage);
+  //     const file = await response.blob();
+  //     await uploadBytes(ref(storage, `photos/${file._data.blobId}`), file);
+  //     const photoUrl = await getDownloadURL(
+  //       ref(storage, `photos/${file._data.blobId}`)
+  //     );
+  //     return photoUrl;
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  const uploadPost = async () => {
+    try {
+      const urlImage = await saveImageToStorage(pathImage);
+
+      await addDoc(collection(db, "posts"), {
+        userId,
+        userName,
+        urlImage,
+        namePhoto,
+        address,
+        coords,
+        date: Date.now().toString(),
+        country,
+        likes: 0,
+      });
+      dispatch(getDataStorageThunk("posts"));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleSubmit = () => {
-    const dataSubmit = {
-      namePhoto,
-      pathImage,
-    };
+    // uploadImg();
+    uploadPost();
 
     handleDeletePost();
-    navigation.navigate("Публікації", {
-      namePhoto,
-      pathImage,
-      address,
-      coords,
-    });
+    navigation.navigate("Публікації");
   };
-  const isFormValid = namePhoto && address && pathImage;
 
   return (
     <View style={styles.form}>

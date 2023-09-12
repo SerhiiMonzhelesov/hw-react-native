@@ -1,9 +1,15 @@
-import { ImageBackground, StyleSheet, View } from "react-native";
+import { ImageBackground, ScrollView, StyleSheet, View } from "react-native";
 import PhotoUser from "../components/PhotoUser";
 import IconHeader from "../components/IconHeader";
 import { useNavigation } from "@react-navigation/native";
+import { useSelector } from "react-redux";
+import { selectPosts, selectUserId } from "../redux/selectors";
+import Post from "../components/Post";
+import { nanoid } from "@reduxjs/toolkit";
 
 export default function ProfileScreen({ route }) {
+  const posts = useSelector(selectPosts);
+  const userId = useSelector(selectUserId);
   const navigation = useNavigation();
 
   const { name } = route;
@@ -20,6 +26,18 @@ export default function ProfileScreen({ route }) {
             <IconHeader name={name} navigation={navigation} />
           </View>
           <PhotoUser />
+          <ScrollView>
+            {posts &&
+              posts
+                ?.filter(
+                  (post) => post.data.userId === userId
+                  // <Post key={nanoid()} navigation={navigation} post={post} />
+                )
+                .map((post) => (
+                  <Post key={nanoid()} navigation={navigation} post={post} />
+                ))}
+          </ScrollView>
+          <View style={styles.thumb} />
         </View>
       </ImageBackground>
     </View>
@@ -57,4 +75,5 @@ const styles = StyleSheet.create({
     top: 22,
     right: 16,
   },
+  thumb: { height: 80 },
 });

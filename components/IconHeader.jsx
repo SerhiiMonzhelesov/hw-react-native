@@ -1,16 +1,22 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { useDispatch } from "react-redux";
+import { logoutThunk } from "../redux/Thunks/userThunk";
 
 export default function IconHeader({ routeName, name }) {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   let nameIcon, pathForNavigation, iconStyle;
 
   if (routeName === "Публікації") {
     nameIcon = "log-out";
-    pathForNavigation = () => navigation.navigate("Registration");
     iconStyle = { marginRight: 16 };
+    pathForNavigation = () => {
+      dispatch(logoutThunk());
+      navigation.navigate("Login");
+    };
   } else if (
     routeName === "Створити публікацію" ||
     routeName === "Коментарі" ||
@@ -21,7 +27,10 @@ export default function IconHeader({ routeName, name }) {
     iconStyle = { marginLeft: 16 };
   } else if (name === "Профіль") {
     nameIcon = "log-out";
-    pathForNavigation = () => navigation.navigate("Registration");
+    pathForNavigation = () => {
+      dispatch(logoutThunk());
+      navigation.navigate("Login");
+    };
   }
   return (
     <TouchableOpacity

@@ -10,6 +10,12 @@ import {
 import ButtonRegistration from "./ButtonRegistration";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useDispatch, useSelector } from "react-redux";
+
+import { setUser } from "../redux/slice/userSlice";
+import { auth, registerDB, storage } from "../config";
+import { selectUserDataLogin } from "../redux/selectors";
+import { registerThunk } from "../redux/Thunks/userThunk";
 
 export default RegistrationForm = ({ navigation }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -17,6 +23,9 @@ export default RegistrationForm = ({ navigation }) => {
   const [loginFocused, setLoginFocused] = useState(false);
   const [emailFocused, setEmailFocused] = useState(false);
   const [passwordFocused, setPasswordFocused] = useState(false);
+  // const userData = useSelector(selectUserDataLogin);
+  // console.log(userData);
+  const dispatch = useDispatch();
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -25,7 +34,7 @@ export default RegistrationForm = ({ navigation }) => {
   const validationSchema = Yup.object().shape({
     login: Yup.string().required("Required"),
     email: Yup.string().email("Invalid email address").required("Required"),
-    password: Yup.string().min(5).max(12).required("Required"),
+    password: Yup.string().min(6).max(12).required("Required"),
   });
 
   const formik = useFormik({
@@ -35,7 +44,9 @@ export default RegistrationForm = ({ navigation }) => {
       password: "",
     },
     onSubmit: (values, { resetForm }) => {
-      console.log(values);
+      dispatch(registerThunk(values));
+
+      // registerDB(values);
       resetForm();
       navigation.navigate("Home");
     },

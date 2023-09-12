@@ -1,62 +1,52 @@
-import { useRoute } from "@react-navigation/native";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { Feather } from "@expo/vector-icons";
+import { StyleSheet, Text, View } from "react-native";
+
+import Post from "../components/Post";
+import { ScrollView } from "react-native-gesture-handler";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectPosts,
+  selectUserEmail,
+  selectUserId,
+  selectUserName,
+} from "../redux/selectors";
+import { getDataStorageThunk } from "../redux/Thunks/postsThunk";
+import { nanoid } from "@reduxjs/toolkit";
 
 export default function PostsScreen({ navigation }) {
-  const route = useRoute();
+  const userName = useSelector(selectUserName);
+  const userEmail = useSelector(selectUserEmail);
+  const posts = useSelector(selectPosts);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (!posts) {
+      dispatch(getDataStorageThunk("posts"));
+    }
+  }, [posts]);
 
   return (
     <View style={styles.container}>
-      <View style={styles.card}>
-        <View style={styles.cardImgThumb}>
-          {route.params ? (
-            <Image
-              source={{
-                uri: `${route.params.pathImage}`,
-              }}
-              style={styles.image}
-            />
-          ) : null}
+      <ScrollView>
+        <View style={styles.containerUser}>
+          <View style={styles.userPhotoThumb}></View>
+          <View style={styles.userDescrThumb}>
+            <Text style={styles.userName}>
+              {userName ? userName : "Ім'я користувача"}
+            </Text>
+            <Text style={styles.userEmail}>
+              {userEmail ? userEmail : "Пошта користувача"}
+            </Text>
+          </View>
         </View>
-        <Text style={styles.cardText}>
-          {route.params ? route.params.namePhoto : "Назва..."}
-        </Text>
-        <View style={styles.cardDescription}>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("Коментарі")}
-            style={{ flexDirection: "row" }}
-          >
-            <View
-              style={{
-                width: 24,
-                height: 24,
-                transform: [{ rotate: "270deg" }],
-                marginRight: 6,
-              }}
-            >
-              <Feather name="message-circle" size={24} color="#BDBDBD" />
-            </View>
-            <Text style={{ color: "#BDBDBD" }}>0</Text>
-          </TouchableOpacity>
 
-          <TouchableOpacity
-            onPress={() =>
-              route.params
-                ? navigation.navigate("Мапа", route.params.coords)
-                : null
-            }
-          >
-            <View style={styles.fieldLocation}>
-              <View style={{ width: 24, height: 24 }}>
-                <Feather name="map-pin" size={24} color="#BDBDBD" />
-              </View>
-              <Text style={{ color: "#BDBDBD", marginLeft: 4 }}>
-                {route.params ? route.params.address : "Місцевість..."}
-              </Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-      </View>
+        {posts &&
+          posts?.map((post) => (
+            <Post key={nanoid()} navigation={navigation} post={post} />
+          ))}
+      </ScrollView>
+      <View style={styles.thumb} />
     </View>
   );
 }
@@ -67,6 +57,32 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-start",
     backgroundColor: "white",
+  },
+  containerUser: {
+    width: 343,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    marginBottom: 32,
+    gap: 8,
+  },
+  userPhotoThumb: {
+    width: 60,
+    height: 60,
+    backgroundColor: "grey",
+    borderRadius: 16,
+    overflow: "hidden",
+  },
+  userDescrThumb: {
+    flexDirection: "column",
+    alignItems: "start",
+    justifyContent: "flex-start",
+  },
+  userName: { color: "#212121", fontFamily: "Roboto_500", fontSize: 13 },
+  userEmail: {
+    color: "rgba(33, 33, 33, 0.80)",
+    fontFamily: "Roboto_400",
+    fontSize: 11,
   },
   card: {
     width: 343,
@@ -107,4 +123,5 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
   },
+  thumb: { height: 80 },
 });

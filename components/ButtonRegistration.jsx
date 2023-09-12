@@ -1,6 +1,10 @@
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import { Pressable, StyleSheet, Text, TouchableOpacity } from "react-native";
 
-export default ButtonRegistration = ({ onPress, nameScreen, isFormValid }) => {
+export default function ButtonRegistration({
+  onPress,
+  nameScreen,
+  isFormValid,
+}) {
   const title =
     nameScreen === "login"
       ? "Увійти"
@@ -8,15 +12,15 @@ export default ButtonRegistration = ({ onPress, nameScreen, isFormValid }) => {
       ? "Зареєструватися"
       : "Опублікувати";
   return (
-    <TouchableOpacity
+    <Pressable
       style={[styles.button, !isFormValid && styles.disabledButton]}
       onPress={onPress}
       disabled={!isFormValid}
     >
       <Text style={styles.buttonText}>{title}</Text>
-    </TouchableOpacity>
+    </Pressable>
   );
-};
+}
 
 const styles = StyleSheet.create({
   button: {

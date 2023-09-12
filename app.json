@@ -18,22 +18,25 @@
       "supportsTablet": true
     },
     "android": {
-      // "package": "com.hw_react_native",
+      "package": "com.serhiimonzhelesov.hw_react_native",
       "config": {
         "googleMaps": {
           "apiKey": "AIzaSyDAW3UWJv3TyzofX4xF5oy3Ebt9bocvBis"
         }
       },
-
       "softwareKeyboardLayoutMode": "pan",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       }
     },
-    
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "42032292-3808-4bb4-9e8e-e54759ed103b"
+      }
     }
   }
 }

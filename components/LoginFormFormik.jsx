@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Alert,
   StyleSheet,
@@ -10,11 +10,15 @@ import {
 import ButtonRegistration from "./ButtonRegistration";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useDispatch } from "react-redux";
+import { loginThunk } from "../redux/Thunks/userThunk";
 
 export default LoginForm = ({ navigation }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [emailFocused, setEmailFocused] = useState(false);
   const [passwordFocused, setPasswordFocused] = useState(false);
+
+  const dispatch = useDispatch();
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -22,7 +26,7 @@ export default LoginForm = ({ navigation }) => {
 
   const validationSchema = Yup.object().shape({
     email: Yup.string().email("Invalid email address").required("Required"),
-    password: Yup.string().min(5).max(12).required("Required"),
+    password: Yup.string().min(6).max(12).required("Required"),
   });
 
   const formik = useFormik({
@@ -31,7 +35,7 @@ export default LoginForm = ({ navigation }) => {
       password: "",
     },
     onSubmit: (values, { resetForm }) => {
-      console.log(values);
+      dispatch(loginThunk(values));
       resetForm();
       navigation.navigate("Home");
     },
