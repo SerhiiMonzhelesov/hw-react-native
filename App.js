@@ -16,9 +16,6 @@ import { auth } from "./config";
 const MainStack = createStackNavigator();
 
 export default function App({ route }) {
-  // const navigation = useNavigation();
-  // const routeName = getFocusedRouteNameFromRoute(route) ?? "Публікації";
-
   const [fontsLoaded] = useFonts({
     Roboto_400: require("./assets/fonts/Roboto-Regular.ttf"),
     Roboto_500: require("./assets/fonts/Roboto-Medium.ttf"),
